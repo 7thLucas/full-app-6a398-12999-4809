@@ -1,13 +1,16 @@
-// CORE: reverse proxy. Serve the target site under our origin and strip
-// framing/CSP response headers so the page renders without restriction.
+// CORE: reverse proxy. Serve the target site under our origin and rewrite
+// responses so all target-origin references become relative. This keeps every
+// request (including XHR/fetch to /api/*) same-origin, avoiding CORS, and lets
+// us strip framing/CSP headers so the page renders unrestricted.
 import "dotenv/config";
 import express from "express";
 import { createServer } from "node:http";
-import { createProxyMiddleware } from "http-proxy-middleware";
+import { createProxyMiddleware, responseInterceptor } from "http-proxy-middleware";
 
 const PORT = Number.parseInt(process.env.PORT || "3000");
 const HOST = process.env.HOST || "0.0.0.0";
 const TARGET = process.env.PROXY_TARGET || "https://hospital.siloam.qtn.ai";
+const TARGET_HOST = new URL(TARGET).host;
 
 async function startServer() {
   const app = express();
@@ -18,13 +21,29 @@ async function startServer() {
     changeOrigin: true,
     ws: true,
     secure: true,
+    selfHandleResponse: true,
+    // Rewrite cookies set for the target domain so they stick on our origin.
+    cookieDomainRewrite: "",
     on: {
-      proxyRes: (proxyRes) => {
+      proxyRes: responseInterceptor(async (responseBuffer, proxyRes, _req, res) => {
         // Drop headers that block embedding / restrict sources.
-        delete proxyRes.headers["content-security-policy"];
-        delete proxyRes.headers["content-security-policy-report-only"];
-        delete proxyRes.headers["x-frame-options"];
-      },
+        res.removeHeader("content-security-policy");
+        res.removeHeader("content-security-policy-report-only");
+        res.removeHeader("x-frame-options");
+
+        const contentType = String(proxyRes.headers["content-type"] || "");
+        // Only rewrite text-based bodies that may carry absolute URLs.
+        if (/text\/html|javascript|application\/json|text\/css/i.test(contentType)) {
+          let body = responseBuffer.toString("utf8");
+          // Absolute origin -> relative (so it routes back through this proxy).
+          body = body.split(TARGET).join("");
+          // Protocol-relative form (//host) -> relative.
+          body = body.split(`//${TARGET_HOST}`).join("");
+          return body;
+        }
+
+        return responseBuffer;
+      }),
     },
   });
 
