@@ -1,66 +1,140 @@
-// CORE: reverse proxy. Serve the target site under our origin and rewrite
-// responses so all target-origin references become relative. This keeps every
-// request (including XHR/fetch to /api/*) same-origin, avoiding CORS, and lets
-// us strip framing/CSP headers so the page renders unrestricted.
+// CORE: reverse proxy. Serve the target site under our origin.
+//
+// Everything is streamed straight through (so assets/binaries are untouched)
+// EXCEPT HTML documents, which are buffered just long enough to:
+//   - strip CSP / X-Frame-Options so the page renders unrestricted, and
+//   - inject a tiny bootstrap script that rewrites absolute target-origin URLs
+//     to relative ones at runtime (fetch / XHR / WebSocket).
+//
+// The app bundle hardcodes baseUrl:"https://hospital.siloam.qtn.ai", so its API
+// calls would otherwise go cross-origin (browser -> target directly), bypassing
+// this proxy and failing CORS. The runtime patch forces those requests back
+// through this origin without touching any JS asset.
 import "dotenv/config";
-import express from "express";
-import { createServer } from "node:http";
-import { createProxyMiddleware, responseInterceptor } from "http-proxy-middleware";
+import http from "node:http";
+import https from "node:https";
+import tls from "node:tls";
 
 const PORT = Number.parseInt(process.env.PORT || "3000");
 const HOST = process.env.HOST || "0.0.0.0";
 const TARGET = process.env.PROXY_TARGET || "https://hospital.siloam.qtn.ai";
-const TARGET_HOST = new URL(TARGET).host;
+const TARGET_URL = new URL(TARGET);
+const TARGET_HOST = TARGET_URL.host; // e.g. hospital.siloam.qtn.ai
+const TARGET_PORT = TARGET_URL.port ? Number(TARGET_URL.port) : 443;
 
-async function startServer() {
-  const app = express();
-  const httpServer = createServer(app);
+// Runtime patch injected into HTML <head>. Rewrites any absolute reference to
+// the target origin (http/ws) into a same-origin relative URL so it routes
+// back through this proxy.
+const INJECT = `<script>(function(){
+  var H=${JSON.stringify(TARGET_HOST)};
+  function rel(u){try{if(typeof u!=="string")return u;
+    var p=["https://"+H,"http://"+H,"//"+H];
+    for(var i=0;i<p.length;i++){if(u.indexOf(p[i])===0)return u.slice(p[i].length)||"/";}
+  }catch(e){}return u;}
+  var of=window.fetch;
+  if(of)window.fetch=function(i,init){try{if(i&&typeof i==="object"&&i.url){i=new Request(rel(i.url),i);}else{i=rel(i);}}catch(e){}return of.call(this,i,init);};
+  var oo=XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open=function(){try{arguments[1]=rel(arguments[1]);}catch(e){}return oo.apply(this,arguments);};
+  var OW=window.WebSocket;
+  if(OW){var NW=function(u,p){try{if(typeof u==="string"){var s=(location.protocol==="https:"?"wss://":"ws://")+location.host;u=u.split("wss://"+H).join(s).split("ws://"+H).join(s).split("//"+H).join(s);}}catch(e){}return p===undefined?new OW(u):new OW(u,p);};NW.prototype=OW.prototype;NW.CONNECTING=OW.CONNECTING;NW.OPEN=OW.OPEN;NW.CLOSING=OW.CLOSING;NW.CLOSED=OW.CLOSED;window.WebSocket=NW;}
+})();</script>`;
 
-  const proxy = createProxyMiddleware({
-    target: TARGET,
-    changeOrigin: true,
-    ws: true,
-    secure: true,
-    selfHandleResponse: true,
-    // Rewrite cookies set for the target domain so they stick on our origin.
-    cookieDomainRewrite: "",
-    on: {
-      proxyRes: responseInterceptor(async (responseBuffer, proxyRes, _req, res) => {
-        // Drop headers that block embedding / restrict sources.
-        res.removeHeader("content-security-policy");
-        res.removeHeader("content-security-policy-report-only");
-        res.removeHeader("x-frame-options");
-
-        const contentType = String(proxyRes.headers["content-type"] || "");
-        // Only rewrite text-based bodies that may carry absolute URLs.
-        if (/text\/html|javascript|application\/json|text\/css/i.test(contentType)) {
-          let body = responseBuffer.toString("utf8");
-          // Absolute origin -> relative (so it routes back through this proxy).
-          body = body.split(TARGET).join("");
-          // Protocol-relative form (//host) -> relative.
-          body = body.split(`//${TARGET_HOST}`).join("");
-          return body;
-        }
-
-        return responseBuffer;
-      }),
-    },
-  });
-
-  app.use("/", proxy);
-
-  // Upgrade WebSocket connections through the proxy too.
-  httpServer.on("upgrade", proxy.upgrade);
-
-  httpServer.listen(PORT, HOST, () => {
-    console.log(`Reverse proxy for ${TARGET} running on http://${HOST}:${PORT}`);
-  });
-
-  process.on("SIGTERM", () => process.exit(0));
-  process.on("SIGINT", () => process.exit(0));
+function rewriteSetCookie(value: string | string[] | undefined) {
+  if (!value) return value;
+  const strip = (c: string) => c.replace(/;\s*Domain=[^;]+/i, "");
+  return Array.isArray(value) ? value.map(strip) : strip(value);
 }
 
-startServer().catch((error) => {
-  console.error("Failed to start server:", error);
-  process.exit(1);
+const server = http.createServer((req, res) => {
+  const headers = { ...req.headers } as Record<string, string | string[] | undefined>;
+  headers.host = TARGET_HOST;
+  // Force uncompressed, full responses: simplifies HTML injection and avoids
+  // 304s with empty bodies.
+  delete headers["accept-encoding"];
+  delete headers["if-none-match"];
+  delete headers["if-modified-since"];
+
+  const upstream = https.request(
+    {
+      host: TARGET_URL.hostname,
+      port: TARGET_PORT,
+      method: req.method,
+      path: req.url,
+      headers,
+      servername: TARGET_URL.hostname,
+    },
+    (proxyRes) => {
+      const outHeaders = { ...proxyRes.headers };
+      delete outHeaders["content-security-policy"];
+      delete outHeaders["content-security-policy-report-only"];
+      delete outHeaders["x-frame-options"];
+      if (outHeaders["set-cookie"]) {
+        outHeaders["set-cookie"] = rewriteSetCookie(outHeaders["set-cookie"]) as string[];
+      }
+
+      const contentType = String(proxyRes.headers["content-type"] || "");
+      const isHtml = /text\/html/i.test(contentType);
+
+      if (!isHtml) {
+        // Stream binaries/JS/CSS/JSON untouched.
+        res.writeHead(proxyRes.statusCode || 502, outHeaders);
+        proxyRes.pipe(res);
+        return;
+      }
+
+      // Buffer HTML, inject the bootstrap script, then send.
+      const chunks: Buffer[] = [];
+      proxyRes.on("data", (c) => chunks.push(c as Buffer));
+      proxyRes.on("end", () => {
+        let body = Buffer.concat(chunks).toString("utf8");
+        if (body.includes("<head>")) {
+          body = body.replace("<head>", `<head>${INJECT}`);
+        } else if (body.includes("<html")) {
+          body = body.replace(/(<html[^>]*>)/i, `$1${INJECT}`);
+        } else {
+          body = INJECT + body;
+        }
+        const buf = Buffer.from(body, "utf8");
+        delete outHeaders["content-length"];
+        delete outHeaders["content-encoding"];
+        res.writeHead(proxyRes.statusCode || 200, { ...outHeaders, "content-length": buf.length });
+        res.end(buf);
+      });
+    }
+  );
+
+  upstream.on("error", (err) => {
+    if (!res.headersSent) res.writeHead(502, { "content-type": "text/plain" });
+    res.end(`Proxy error: ${err.message}`);
+  });
+
+  req.pipe(upstream);
 });
+
+// Proxy WebSocket upgrades through a TLS tunnel to the target.
+server.on("upgrade", (req, clientSocket, head) => {
+  const upstream = tls.connect(
+    { host: TARGET_URL.hostname, port: TARGET_PORT, servername: TARGET_URL.hostname },
+    () => {
+      const lines = [`${req.method} ${req.url} HTTP/1.1`];
+      const h = { ...req.headers, host: TARGET_HOST } as Record<string, string | string[]>;
+      for (const [k, v] of Object.entries(h)) {
+        if (Array.isArray(v)) v.forEach((vv) => lines.push(`${k}: ${vv}`));
+        else lines.push(`${k}: ${v}`);
+      }
+      upstream.write(lines.join("\r\n") + "\r\n\r\n");
+      if (head && head.length) upstream.write(head);
+      upstream.pipe(clientSocket);
+      clientSocket.pipe(upstream);
+    }
+  );
+  upstream.on("error", () => clientSocket.destroy());
+  clientSocket.on("error", () => upstream.destroy());
+});
+
+server.listen(PORT, HOST, () => {
+  console.log(`Reverse proxy for ${TARGET} running on http://${HOST}:${PORT}`);
+});
+
+process.on("SIGTERM", () => process.exit(0));
+process.on("SIGINT", () => process.exit(0));
