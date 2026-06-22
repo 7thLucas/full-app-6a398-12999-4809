@@ -1,0 +1,57 @@
+<style>
+  .mode-portrait .sl-found { flex-direction: column; }
+  .mode-portrait .sl-found-visual { width: 100%; height: 32%; }
+  .mode-portrait .sl-found-copy { width: 100%; }
+  .mode-landscape .sl-found { flex-direction: row; }
+  .mode-landscape .sl-found-visual { width: 38%; height: 100%; }
+  .mode-landscape .sl-found-copy { width: 62%; }
+</style>
+<section class="w-full h-full overflow-auto bg-white">
+  <div class="sl-found flex w-full h-full">
+    <!-- Copy -->
+    <div class="sl-found-copy flex flex-col justify-center p-12">
+      <p class="text-sm font-semibold tracking-[0.18em] text-teal-700 uppercase mb-8">Why Siloam exists</p>
+
+      <div class="grid grid-cols-1 gap-6">
+        <!-- Problem -->
+        <div class="rounded-2xl border border-slate-200 p-7">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="h-7 w-7 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-sm font-bold">!</span>
+            <h2 class="text-xl font-bold text-slate-900">The Problem</h2>
+          </div>
+          <p class="text-slate-600 leading-relaxed">
+            Quality and training teams review customer-service call recordings
+            <span class="font-semibold text-slate-800">by hand</span> to score agent
+            performance. It's slow, inconsistent between reviewers, and almost impossible
+            to track over time — so most calls are never scored and problems surface late.
+          </p>
+        </div>
+
+        <!-- Solution -->
+        <div class="rounded-2xl bg-teal-700 p-7">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="h-7 w-7 rounded-full bg-white/20 text-white flex items-center justify-center text-sm font-bold">✓</span>
+            <h2 class="text-xl font-bold text-white">The Solution</h2>
+          </div>
+          <p class="text-teal-50 leading-relaxed">
+            Siloam automates the whole loop:
+            <span class="font-semibold text-white">ingest a recording → transcribe &amp;
+            evaluate with AI → produce evidence-backed scores → recommend training →
+            track remediation.</span> Staff get answers without manual review; leads get
+            dashboards and a closing feedback loop.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual -->
+    <div class="sl-found-visual relative overflow-hidden bg-slate-900">
+      <img
+        src="https://api.qb-deck.quantumbyte.ai/common/image-generation?prompt=healthcare%20call%20center%20quality%20review%2C%20audio%20waveform%20and%20transcript%20on%20screen%2C%20clinical%20calm%20teal%20tones%2C%20professional"
+        alt="Manual call review today"
+        class="absolute inset-0 w-full h-full object-cover opacity-90"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent"></div>
+    </div>
+  </div>
+</section>
