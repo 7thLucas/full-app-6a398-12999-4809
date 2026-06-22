@@ -1,0 +1,84 @@
+<style>
+  .mode-portrait .sl-score { flex-direction: column; }
+  .mode-portrait .sl-score-left { width: 100%; }
+  .mode-portrait .sl-score-right { width: 100%; }
+  .mode-landscape .sl-score { flex-direction: row; }
+  .mode-landscape .sl-score-left { width: 58%; }
+  .mode-landscape .sl-score-right { width: 42%; }
+</style>
+<section class="w-full h-full overflow-auto bg-white">
+  <div class="flex flex-col w-full h-full p-12">
+    <div class="mb-7">
+      <p class="text-sm font-semibold tracking-[0.18em] text-teal-700 uppercase mb-2">What gets scored</p>
+      <h2 class="text-3xl font-bold text-slate-900">A clinical rubric, applied the same way every time</h2>
+    </div>
+
+    <div class="sl-score flex gap-6 flex-1">
+      <!-- Left: rubric dimensions -->
+      <div class="sl-score-left flex flex-col gap-4">
+        <div class="rounded-2xl border border-slate-200 p-6">
+          <h3 class="text-base font-bold text-slate-900 mb-1">SOP compliance</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Did the agent follow standard operating procedure for the call?</p>
+        </div>
+
+        <div class="rounded-2xl bg-teal-700 p-6">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-white">5R medication safety</h3>
+            <span class="text-[11px] font-semibold tracking-widest text-teal-100 uppercase">Patient-critical</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1.5 rounded-lg bg-white/15 text-white text-sm font-medium">Right patient</span>
+            <span class="px-3 py-1.5 rounded-lg bg-white/15 text-white text-sm font-medium">Right medication</span>
+            <span class="px-3 py-1.5 rounded-lg bg-white/15 text-white text-sm font-medium">Right dose</span>
+            <span class="px-3 py-1.5 rounded-lg bg-white/15 text-white text-sm font-medium">Right route</span>
+            <span class="px-3 py-1.5 rounded-lg bg-white/15 text-white text-sm font-medium">Right time</span>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 p-6">
+          <h3 class="text-base font-bold text-slate-900 mb-3">Service &amp; soft skills</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 text-sm font-medium">Courtesy</span>
+            <span class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 text-sm font-medium">Empathy</span>
+            <span class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 text-sm font-medium">Responsiveness</span>
+            <span class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 text-sm font-medium">Personalization</span>
+            <span class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 text-sm font-medium">Problem-solving</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: bands + course matching -->
+      <div class="sl-score-right flex flex-col gap-4">
+        <div class="rounded-2xl border border-slate-200 p-6">
+          <p class="text-xs font-semibold tracking-widest text-slate-500 uppercase mb-4">Issues sorted by severity band</p>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <span class="h-3 w-3 rounded-full bg-rose-500 shrink-0"></span>
+              <span class="text-sm font-bold text-slate-900 w-16">Critical</span>
+              <span class="text-sm text-slate-600">score below 70</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="h-3 w-3 rounded-full bg-amber-500 shrink-0"></span>
+              <span class="text-sm font-bold text-slate-900 w-16">Major</span>
+              <span class="text-sm text-slate-600">score 70 – 79</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="h-3 w-3 rounded-full bg-teal-500 shrink-0"></span>
+              <span class="text-sm font-bold text-slate-900 w-16">Minor</span>
+              <span class="text-sm text-slate-600">score 80 – 89</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl bg-slate-900 p-6 flex-1 flex flex-col justify-center">
+          <p class="text-xs font-semibold tracking-widest text-amber-400 uppercase mb-2">From gap to training</p>
+          <h3 class="text-lg font-bold text-white mb-2">Course matching by meaning</h3>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            Each issue is embedded and matched by cosine similarity against the training-course
+            catalog — so the top-3 recommendations target the actual weakness, not a keyword.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,76 @@
+<style>
+  .mode-portrait .sl-flow { grid-template-columns: 1fr; }
+  .mode-portrait .sl-flow-arrow { display: none; }
+  .mode-landscape .sl-flow { grid-template-columns: repeat(5, 1fr); }
+</style>
+<section class="w-full h-full overflow-auto bg-white">
+  <div class="flex flex-col w-full h-full p-12">
+    <div class="mb-8">
+      <p class="text-sm font-semibold tracking-[0.18em] text-teal-700 uppercase mb-2">How it works</p>
+      <h2 class="text-3xl font-bold text-slate-900">One recording in, a scored evaluation out</h2>
+      <p class="mt-2 text-slate-600 max-w-3xl leading-relaxed">A single automated pipeline — no manual scoring step anywhere in the chain.</p>
+    </div>
+
+    <!-- Pipeline -->
+    <div class="sl-flow grid gap-4 flex-1 items-stretch">
+      <!-- 1 Upload -->
+      <div class="relative rounded-2xl border border-slate-200 p-6 flex flex-col">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="h-8 w-8 rounded-lg bg-teal-700 text-white flex items-center justify-center text-sm font-bold">1</span>
+          <span class="text-[11px] font-semibold tracking-widest text-teal-700 uppercase">Upload</span>
+        </div>
+        <h3 class="text-base font-bold text-slate-900 mb-1">Submit a recording</h3>
+        <p class="text-slate-600 text-sm leading-relaxed">An agent or reviewer uploads a customer-service call — audio, or video-with-audio — through the web app.</p>
+      </div>
+
+      <!-- 2 Store + enqueue -->
+      <div class="relative rounded-2xl border border-slate-200 p-6 flex flex-col">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="h-8 w-8 rounded-lg bg-teal-700 text-white flex items-center justify-center text-sm font-bold">2</span>
+          <span class="text-[11px] font-semibold tracking-widest text-teal-700 uppercase">Store &amp; queue</span>
+        </div>
+        <h3 class="text-base font-bold text-slate-900 mb-1">Persist &amp; dispatch</h3>
+        <p class="text-slate-600 text-sm leading-relaxed">The backend stores the media in AWS S3 and publishes an analysis job to a RabbitMQ work queue.</p>
+      </div>
+
+      <!-- 3 Analyze -->
+      <div class="relative rounded-2xl bg-teal-700 p-6 flex flex-col">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="h-8 w-8 rounded-lg bg-white/20 text-white flex items-center justify-center text-sm font-bold">3</span>
+          <span class="text-[11px] font-semibold tracking-widest text-teal-100 uppercase">Analyze</span>
+        </div>
+        <h3 class="text-base font-bold text-white mb-2">The AI core</h3>
+        <ul class="text-teal-50 text-sm leading-relaxed space-y-1">
+          <li>· Transcription</li>
+          <li>· Speaker diarization</li>
+          <li>· Service-quality scoring</li>
+          <li>· Course recommendation</li>
+        </ul>
+      </div>
+
+      <!-- 4 Proxy -->
+      <div class="relative rounded-2xl border border-slate-200 p-6 flex flex-col">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="h-8 w-8 rounded-lg bg-slate-200 text-slate-600 flex items-center justify-center text-sm font-bold">4</span>
+          <span class="text-[11px] font-semibold tracking-widest text-slate-500 uppercase">Proxy · optional</span>
+        </div>
+        <h3 class="text-base font-bold text-slate-900 mb-1">Lightweight playback</h3>
+        <p class="text-slate-600 text-sm leading-relaxed">A worker renders a 480p proxy and MP3 for fast review; the heavy original can then be purged.</p>
+      </div>
+
+      <!-- 5 Report -->
+      <div class="relative rounded-2xl border border-slate-200 p-6 flex flex-col">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="h-8 w-8 rounded-lg bg-teal-700 text-white flex items-center justify-center text-sm font-bold">5</span>
+          <span class="text-[11px] font-semibold tracking-widest text-teal-700 uppercase">Report</span>
+        </div>
+        <h3 class="text-base font-bold text-slate-900 mb-1">Back to the team</h3>
+        <p class="text-slate-600 text-sm leading-relaxed">Results land in MongoDB and surface in the app as scored evaluations, transcripts, and recommended courses.</p>
+      </div>
+    </div>
+
+    <p class="mt-6 text-sm text-slate-500">
+      Backend and AI stay decoupled through the message queue — the upload returns immediately while analysis runs asynchronously in the background.
+    </p>
+  </div>
+</section>

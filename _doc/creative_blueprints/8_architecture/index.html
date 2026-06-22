@@ -1,0 +1,67 @@
+<style>
+  .mode-portrait .sl-arch-svc { grid-template-columns: 1fr; }
+  .mode-portrait .sl-arch-trust { grid-template-columns: 1fr; }
+  .mode-landscape .sl-arch-svc { grid-template-columns: repeat(3, 1fr); }
+  .mode-landscape .sl-arch-trust { grid-template-columns: repeat(3, 1fr); }
+</style>
+<section class="w-full h-full overflow-auto bg-white">
+  <div class="flex flex-col w-full h-full p-12">
+    <div class="mb-7">
+      <p class="text-sm font-semibold tracking-[0.18em] text-teal-700 uppercase mb-2">Under the hood</p>
+      <h2 class="text-3xl font-bold text-slate-900">Three services, independently deployed</h2>
+    </div>
+
+    <!-- Service cards -->
+    <div class="sl-arch-svc grid gap-5 mb-5">
+      <div class="rounded-2xl border border-slate-200 p-6 flex flex-col">
+        <h3 class="text-lg font-bold text-slate-900 mb-1">Frontend</h3>
+        <p class="text-sm text-slate-600 leading-relaxed mb-3">Upload UI, dashboards, and reports.</p>
+        <p class="text-xs text-slate-500 mt-auto">React Router 7 · TypeScript · Tailwind v4 · Vite</p>
+      </div>
+      <div class="rounded-2xl bg-teal-700 p-6 flex flex-col">
+        <h3 class="text-lg font-bold text-white mb-1">Backend</h3>
+        <p class="text-sm text-teal-50 leading-relaxed mb-3">Auth, media storage, job orchestration, data API.</p>
+        <p class="text-xs text-teal-100 mt-auto">Python · FastAPI · MongoDB · AWS S3 · RabbitMQ</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6 flex flex-col">
+        <h3 class="text-lg font-bold text-slate-900 mb-1">AI service</h3>
+        <p class="text-sm text-slate-600 leading-relaxed mb-3">Transcription, diarization, evaluation, course recs.</p>
+        <p class="text-xs text-slate-500 mt-auto">Python · FastAPI · pyannote · Replicate / OpenAI / Anthropic / ElevenLabs</p>
+      </div>
+    </div>
+
+    <!-- Coupling note -->
+    <div class="rounded-xl bg-slate-100 px-5 py-3 mb-5 flex items-center gap-3">
+      <span class="text-[11px] font-semibold tracking-widest text-teal-700 uppercase shrink-0">Coupling</span>
+      <p class="text-sm text-slate-600">Backend and AI talk only over RabbitMQ — backend publishes analysis jobs, AI consumes and replies. Neither blocks the other.</p>
+    </div>
+
+    <!-- Trust + delivery -->
+    <div class="sl-arch-trust grid gap-5 flex-1">
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <p class="text-xs font-semibold tracking-widest text-teal-700 uppercase mb-3">Security</p>
+        <ul class="text-sm text-slate-600 space-y-2 leading-relaxed">
+          <li>JWT auth (RS256)</li>
+          <li>Fernet field-level encryption</li>
+          <li>SlowAPI rate limiting</li>
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <p class="text-xs font-semibold tracking-widest text-teal-700 uppercase mb-3">Delivery</p>
+        <ul class="text-sm text-slate-600 space-y-2 leading-relaxed">
+          <li>Jenkins CI/CD per service</li>
+          <li>SonarQube quality scanning</li>
+          <li>Docker · Kubernetes-ready</li>
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <p class="text-xs font-semibold tracking-widest text-teal-700 uppercase mb-3">Environments</p>
+        <ul class="text-sm text-slate-600 space-y-2 leading-relaxed">
+          <li><span class="font-semibold text-slate-800">dev</span> — development branch</li>
+          <li><span class="font-semibold text-slate-800">staging</span> — pre-production</li>
+          <li><span class="font-semibold text-slate-800">main</span> — production</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
