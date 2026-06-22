@@ -1,73 +1,40 @@
-// CORE: entrypoint + server wiring. Express + React Router only.
+// CORE: reverse proxy. Serve the target site under our origin and strip
+// framing/CSP response headers so the page renders without restriction.
 import "dotenv/config";
-import { createRequestHandler } from "@react-router/express";
-import type { ServerBuild } from "react-router";
 import express from "express";
 import { createServer } from "node:http";
-import fs from "node:fs";
+import { createProxyMiddleware } from "http-proxy-middleware";
 
 const PORT = Number.parseInt(process.env.PORT || "3000");
-const HOST = process.env.HOST || "0.0.0.0"; // Default to 0.0.0.0 for tunnel connectivity
-const BUILD_PATH = "./build/server/index.js";
-const DEVELOPMENT = process.env.NODE_ENV !== "production";
-
-const isContainer = fs.existsSync("/.dockerenv") || fs.existsSync("/run/secrets/kubernetes.io");
-const defaultPort = isContainer ? 443 : undefined;
-const hmrClientPort = process.env.HMR_CLIENT_PORT
-  ? Number(process.env.HMR_CLIENT_PORT)
-  : defaultPort;
+const HOST = process.env.HOST || "0.0.0.0";
+const TARGET = process.env.PROXY_TARGET || "https://hospital.siloam.qtn.ai";
 
 async function startServer() {
   const app = express();
   const httpServer = createServer(app);
 
-  if (DEVELOPMENT) {
-    console.log("Starting development server with Vite");
-    const vite = await import("vite");
-    const viteDevServer = await vite.createServer({
-      server: {
-        middlewareMode: true,
-        allowedHosts: true,
-        hmr: {
-          server: httpServer,
-          ...(hmrClientPort ? { clientPort: hmrClientPort } : {}),
-        },
-        watch: {
-          usePolling: true,
-          interval: 100,
-        },
+  const proxy = createProxyMiddleware({
+    target: TARGET,
+    changeOrigin: true,
+    ws: true,
+    secure: true,
+    on: {
+      proxyRes: (proxyRes) => {
+        // Drop headers that block embedding / restrict sources.
+        delete proxyRes.headers["content-security-policy"];
+        delete proxyRes.headers["content-security-policy-report-only"];
+        delete proxyRes.headers["x-frame-options"];
       },
-    });
-    app.use(viteDevServer.middlewares);
-    app.all("*", async (req, res, next) => {
-      try {
-        return await createRequestHandler({
-          build: (await viteDevServer.ssrLoadModule(
-            "virtual:react-router/server-build"
-          )) as unknown as ServerBuild,
-          getLoadContext: () => ({}),
-        })(req, res, next);
-      } catch (error) {
-        if (error instanceof Error) {
-          viteDevServer.ssrFixStacktrace(error);
-        }
-        next(error);
-      }
-    });
-  } else {
-    console.log("Starting production server");
-    app.use(express.static("build/client"));
-    const build = await import(BUILD_PATH);
-    app.all(
-      "*",
-      createRequestHandler({
-        build: build as unknown as ServerBuild,
-      })
-    );
-  }
+    },
+  });
+
+  app.use("/", proxy);
+
+  // Upgrade WebSocket connections through the proxy too.
+  httpServer.on("upgrade", proxy.upgrade);
 
   httpServer.listen(PORT, HOST, () => {
-    console.log(`Server is running on http://${HOST}:${PORT}`);
+    console.log(`Reverse proxy for ${TARGET} running on http://${HOST}:${PORT}`);
   });
 
   process.on("SIGTERM", () => process.exit(0));
