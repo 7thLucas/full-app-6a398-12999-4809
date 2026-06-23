@@ -47,7 +47,16 @@ function rewriteSetCookie(value: string | string[] | undefined) {
 
 const server = http.createServer((req, res) => {
   const headers = { ...req.headers } as Record<string, string | string[] | undefined>;
+  const clientHost = req.headers.host;
   headers.host = TARGET_HOST;
+  // Rewrite Origin/Referer to the target origin. The target's CSRF/origin
+  // checks compare these against its own host; left as our proxy origin they
+  // mismatch and state-changing requests (e.g. login) get a 403, so cookies
+  // are never set and auth silently fails.
+  if (headers.origin) headers.origin = TARGET_URL.origin;
+  if (typeof headers.referer === "string" && clientHost) {
+    headers.referer = headers.referer.replace(`//${clientHost}`, `//${TARGET_HOST}`);
+  }
   // Force uncompressed, full responses: simplifies HTML injection and avoids
   // 304s with empty bodies.
   delete headers["accept-encoding"];
@@ -68,6 +77,17 @@ const server = http.createServer((req, res) => {
       delete outHeaders["content-security-policy"];
       delete outHeaders["content-security-policy-report-only"];
       delete outHeaders["x-frame-options"];
+      // Rewrite redirects that point back at the target origin to relative
+      // paths, so the browser stays on the proxy origin. Otherwise a
+      // post-login 302 to https://<target>/... sends the browser straight to
+      // the target, where the (host-only) auth cookie doesn't exist, and it
+      // immediately bounces back to login — looks like an instant logout.
+      if (typeof outHeaders.location === "string") {
+        outHeaders.location = outHeaders.location.replace(
+          new RegExp(`^https?://${TARGET_HOST.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`, "i"),
+          ""
+        );
+      }
       if (outHeaders["set-cookie"]) {
         outHeaders["set-cookie"] = rewriteSetCookie(outHeaders["set-cookie"]) as string[];
       }
@@ -127,6 +147,12 @@ server.on("upgrade", (req, clientSocket, head) => {
     () => {
       const lines = [`${req.method} ${req.url} HTTP/1.1`];
       const h = { ...req.headers, host: TARGET_HOST } as Record<string, string | string[]>;
+      // Match the HTTP path: present the target's own origin so any
+      // origin/CSRF check on the WS handshake passes.
+      if (h.origin) h.origin = TARGET_URL.origin;
+      if (typeof h.referer === "string") {
+        h.referer = (h.referer as string).replace(`//${req.headers.host}`, `//${TARGET_HOST}`);
+      }
       for (const [k, v] of Object.entries(h)) {
         if (Array.isArray(v)) v.forEach((vv) => lines.push(`${k}: ${vv}`));
         else lines.push(`${k}: ${v}`);
