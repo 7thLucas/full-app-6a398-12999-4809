@@ -77,6 +77,14 @@ const server = http.createServer((req, res) => {
 
       if (!isHtml) {
         // Stream binaries/JS/CSS/JSON untouched.
+        // Drop upstream framing headers: the Node http client has already
+        // de-chunked the body, so `proxyRes` is the decoded entity. Letting
+        // Node re-frame the outgoing response avoids forwarding a stale
+        // Content-Length and prevents emitting both Content-Length and
+        // Transfer-Encoding at once (which makes nginx return 502).
+        delete outHeaders["content-length"];
+        delete outHeaders["transfer-encoding"];
+        delete outHeaders["connection"];
         res.writeHead(proxyRes.statusCode || 502, outHeaders);
         proxyRes.pipe(res);
         return;
@@ -97,6 +105,7 @@ const server = http.createServer((req, res) => {
         const buf = Buffer.from(body, "utf8");
         delete outHeaders["content-length"];
         delete outHeaders["content-encoding"];
+        delete outHeaders["transfer-encoding"];
         res.writeHead(proxyRes.statusCode || 200, { ...outHeaders, "content-length": buf.length });
         res.end(buf);
       });
