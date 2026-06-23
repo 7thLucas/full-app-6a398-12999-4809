@@ -5,31 +5,33 @@
 Calm, clinical, hospital-grade internal tool. Professional and evidence-driven, never flashy or playful. Generous whitespace, clear hierarchy, rounded cards, soft borders. Think a premium healthcare operations console — legible, reassuring, trustworthy.
 
 ## Color palette
-- **Primary — Clinical Teal:** `teal-700` (#0f766e) for primary actions, active nav, key accents and headings emphasis. Lighter teals (`teal-50`, `teal-100`) for soft backgrounds/badges.
-- **Neutral — Slate:** `slate-900` for primary text and dark feature/ROI blocks; `slate-600` for body copy; `slate-500` for secondary; `slate-200` for borders; `slate-50`/white for surfaces.
-- **Accent — Amber:** `amber-600`/`amber-500` (and `amber-50`/`amber-100` backgrounds) used sparingly for highlights, projections, and attention chips. Do not overuse.
-- **Surfaces:** white app surface, very light slate page background.
+*Source of truth: the live `siloam-frontend` app (Tailwind v4, Inter, `bg-slate-50` body). The deck and any new surfaces follow these.*
+- **Primary — Blue:** `blue-600` (#2563eb) for primary actions, active nav, links, focus rings, and key accents. `blue-700` (#1d4ed8) for hover/press; `blue-50`/`blue-100` for soft backgrounds/badges; `blue-900` (#1e3a8a) for dark emphasis blocks.
+- **Neutral — Gray/Slate:** `gray-900` for primary text and dark feature/ROI blocks; `gray-600` body copy; `gray-400`/`gray-500` secondary; `gray-200` borders; `gray-50`/white surfaces. (`slate-*` is interchangeable and used widely.)
+- **Accent — Amber:** `amber-500`/`amber-600` (and `amber-50`/`amber-100` backgrounds) used sparingly for highlights, projections, and attention chips. Do not overuse.
+- **Positive — Emerald:** `emerald-500`/`emerald-600` (`emerald-50` bg) for success, strengths, positive deltas.
+- **Surfaces:** white app surface, very light gray/slate page background.
 
 ## Severity band colors (for issues)
-- **Critical:** rose (`rose-100` bg / `rose-600` text/icon).
-- **Major:** amber (`amber-100` / `amber-700`).
-- **Minor:** slate (`slate-100` / `slate-600`).
-- **Strength / positive:** teal/emerald (`teal-50` / `teal-700`).
+- **Critical:** rose (`rose-50`/`rose-100` bg / `rose-600`/`rose-700` text/icon).
+- **Major:** amber (`amber-50`/`amber-100` / `amber-700`).
+- **Minor:** gray/slate (`gray-100` / `gray-600`).
+- **Strength / positive:** emerald (`emerald-50` / `emerald-600`).
 Always pair color with a text label — never rely on color alone (accessibility).
 
 ## Typography
 - Sans-serif system/Inter-style. Bold, tight headings (`font-bold`, tight leading). Body `text-slate-600 leading-relaxed`.
-- Section eyebrows: small uppercase, letter-spaced (`tracking-[0.18em]`), `text-teal-700` (or `text-amber-600` for accents).
+- Section eyebrows: small uppercase, letter-spaced (`tracking-[0.18em]`), `text-blue-600` (or `text-amber-600` for accents).
 - Use `font-mono` only for derived numeric formulas / data readouts.
 
 ## Components & elevation
 - **Cards:** `rounded-2xl`, `border border-slate-200`, padding `p-6`/`p-7`. Minimal shadow — rely on borders and spacing.
-- **Logo mark:** rounded-lg teal-700 square with white bold "S".
-- **Badges/chips:** `rounded-full`, soft colored bg + matching text (teal for active, slate for inactive).
-- **Primary button:** teal-700 bg, white text, rounded. **Secondary:** white bg, slate border.
-- **Dark blocks:** `slate-900` background with amber/teal accents for emphasis / summary / ROI sections.
-- **Score visuals:** clear scorecards, progress bars/rings in teal; consistent rubric layout.
-- **Dashboards:** clean aggregation cards, restrained data-viz in teal/slate, amber only to flag.
+- **Logo mark:** rounded-lg blue-600 square with white bold "S".
+- **Badges/chips:** `rounded-full`, soft colored bg + matching text (blue for active, gray/slate for inactive).
+- **Primary button:** blue-600 bg, white text, rounded (hover blue-700). **Secondary:** white bg, slate border.
+- **Dark blocks:** `gray-900`/`blue-900` background with amber accents for emphasis / summary / ROI sections.
+- **Score visuals:** clear scorecards, progress bars/rings in blue; consistent rubric layout.
+- **Dashboards:** clean aggregation cards, restrained data-viz in blue/slate, amber only to flag.
 
 ## Layout
 - Internal-tool shell: left sidebar nav (role-scoped) + top bar, content area on light slate background with white cards.
