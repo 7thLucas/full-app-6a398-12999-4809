@@ -9,13 +9,14 @@
   .mode-portrait .sl-flow { grid-template-columns: 1fr; }
   .mode-portrait .sl-flow-arrow { display: none; }
   .mode-landscape .sl-flow { grid-template-columns: repeat(5, 1fr); }
+.b-navy{background-color:#1c2674}.b-navy-t{color:#1c2674}.b-navy-b{border-color:#1c2674}.b-deep{background-color:#141a4d}.b-gold{background-color:#ffcf00}.b-gold-t{color:#ffcf00}.b-gold2-t{color:#ffdb4d}.b-soft{background-color:#eef2fb}.b-light-t{color:#dbe4f7}.b-mute-t{color:#c3d0ee}.b-green{background-color:#48a942}.b-light-b{border-color:#c3d0ee}.b-grad-cover{background:linear-gradient(to top right,rgba(13,18,53,.82),rgba(15,23,42,.15) 42%,transparent)}
 </style>
 <section class="slide-root w-full h-full overflow-auto bg-white">
   <div class="flex flex-col w-full h-full p-12">
     <div class="mb-8" data-rise style="animation-delay:.05s">
       <div class="flex items-center gap-2.5 mb-3">
-        <span class="h-1.5 w-7 rounded-full bg-[#1c2674]"></span>
-        <p class="text-[12px] font-semibold tracking-[0.2em] text-[#1c2674] uppercase">How it works</p>
+        <span class="h-1.5 w-7 rounded-full b-navy"></span>
+        <p class="text-[12px] font-semibold tracking-[0.2em] b-navy-t uppercase">How it works</p>
       </div>
       <h2 class="text-3xl font-bold text-slate-900">One recording in, a scored evaluation out</h2>
       <p class="mt-2 text-slate-600 max-w-3xl leading-relaxed">A single automated pipeline — no manual scoring step anywhere in the chain.</p>
@@ -26,12 +27,12 @@
       <!-- 1 Upload -->
       <div class="relative rounded-2xl border border-slate-200 p-6 flex flex-col shadow-sm" data-rise style="animation-delay:.12s">
         <div class="flex items-center gap-2 mb-3">
-          <span class="h-8 w-8 rounded-lg bg-[#1c2674] text-white flex items-center justify-center text-sm font-bold">1</span>
-          <span class="text-[11px] font-semibold tracking-widest text-[#1c2674] uppercase">Upload</span>
+          <span class="h-8 w-8 rounded-lg b-navy text-white flex items-center justify-center text-sm font-bold">1</span>
+          <span class="text-[11px] font-semibold tracking-widest b-navy-t uppercase">Upload</span>
         </div>
         <h3 class="text-base font-bold text-slate-900 mb-1">Submit a recording</h3>
         <p class="text-slate-600 text-sm leading-relaxed">An agent or reviewer uploads a customer-service call — audio, or video-with-audio — through the web app.</p>
-        <span class="sl-flow-arrow absolute -right-3 top-1/2 -translate-y-1/2 z-10 h-6 w-6 rounded-full bg-white border border-slate-200 items-center justify-center text-[#1c2674] shadow-sm">
+        <span class="sl-flow-arrow absolute -right-3 top-1/2 -translate-y-1/2 z-10 h-6 w-6 rounded-full bg-white border border-slate-200 items-center justify-center b-navy-t shadow-sm">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3"><path d="m9 18 6-6-6-6"/></svg>
         </span>
       </div>
@@ -39,30 +40,30 @@
       <!-- 2 Store + enqueue -->
       <div class="relative rounded-2xl border border-slate-200 p-6 flex flex-col shadow-sm" data-rise style="animation-delay:.2s">
         <div class="flex items-center gap-2 mb-3">
-          <span class="h-8 w-8 rounded-lg bg-[#1c2674] text-white flex items-center justify-center text-sm font-bold">2</span>
-          <span class="text-[11px] font-semibold tracking-widest text-[#1c2674] uppercase">Store &amp; queue</span>
+          <span class="h-8 w-8 rounded-lg b-navy text-white flex items-center justify-center text-sm font-bold">2</span>
+          <span class="text-[11px] font-semibold tracking-widest b-navy-t uppercase">Store &amp; queue</span>
         </div>
         <h3 class="text-base font-bold text-slate-900 mb-1">Persist &amp; dispatch</h3>
         <p class="text-slate-600 text-sm leading-relaxed">The backend stores the media in AWS S3 and publishes an analysis job to a RabbitMQ work queue.</p>
-        <span class="sl-flow-arrow absolute -right-3 top-1/2 -translate-y-1/2 z-10 h-6 w-6 rounded-full bg-white border border-slate-200 items-center justify-center text-[#1c2674] shadow-sm">
+        <span class="sl-flow-arrow absolute -right-3 top-1/2 -translate-y-1/2 z-10 h-6 w-6 rounded-full bg-white border border-slate-200 items-center justify-center b-navy-t shadow-sm">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3"><path d="m9 18 6-6-6-6"/></svg>
         </span>
       </div>
 
       <!-- 3 Analyze -->
-      <div class="relative rounded-2xl bg-[#1c2674] p-6 flex flex-col shadow-sm" data-rise style="animation-delay:.28s">
+      <div class="relative rounded-2xl b-navy p-6 flex flex-col shadow-sm" data-rise style="animation-delay:.28s">
         <div class="flex items-center gap-2 mb-3">
           <span class="h-8 w-8 rounded-lg bg-white/20 text-white flex items-center justify-center text-sm font-bold">3</span>
-          <span class="text-[11px] font-semibold tracking-widest text-[#c3d0ee] uppercase">Analyze</span>
+          <span class="text-[11px] font-semibold tracking-widest b-mute-t uppercase">Analyze</span>
         </div>
         <h3 class="text-base font-bold text-white mb-2">The AI core</h3>
-        <ul class="text-[#dbe4f7] text-sm leading-relaxed space-y-1.5">
-          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-[#ffcf00]"></span>Transcription</li>
-          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-[#ffcf00]"></span>Speaker diarization</li>
-          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-[#ffcf00]"></span>Service-quality scoring</li>
-          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-[#ffcf00]"></span>Course recommendation</li>
+        <ul class="b-light-t text-sm leading-relaxed space-y-1.5">
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full b-gold"></span>Transcription</li>
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full b-gold"></span>Speaker diarization</li>
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full b-gold"></span>Service-quality scoring</li>
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full b-gold"></span>Course recommendation</li>
         </ul>
-        <span class="sl-flow-arrow absolute -right-3 top-1/2 -translate-y-1/2 z-10 h-6 w-6 rounded-full bg-white border border-slate-200 items-center justify-center text-[#1c2674] shadow-sm">
+        <span class="sl-flow-arrow absolute -right-3 top-1/2 -translate-y-1/2 z-10 h-6 w-6 rounded-full bg-white border border-slate-200 items-center justify-center b-navy-t shadow-sm">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3"><path d="m9 18 6-6-6-6"/></svg>
         </span>
       </div>
@@ -75,7 +76,7 @@
         </div>
         <h3 class="text-base font-bold text-slate-900 mb-1">Lightweight playback</h3>
         <p class="text-slate-600 text-sm leading-relaxed">A worker renders a 480p proxy and MP3 for fast review; the heavy original can then be purged.</p>
-        <span class="sl-flow-arrow absolute -right-3 top-1/2 -translate-y-1/2 z-10 h-6 w-6 rounded-full bg-white border border-slate-200 items-center justify-center text-[#1c2674] shadow-sm">
+        <span class="sl-flow-arrow absolute -right-3 top-1/2 -translate-y-1/2 z-10 h-6 w-6 rounded-full bg-white border border-slate-200 items-center justify-center b-navy-t shadow-sm">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3"><path d="m9 18 6-6-6-6"/></svg>
         </span>
       </div>
@@ -83,8 +84,8 @@
       <!-- 5 Report -->
       <div class="relative rounded-2xl border border-slate-200 p-6 flex flex-col shadow-sm" data-rise style="animation-delay:.44s">
         <div class="flex items-center gap-2 mb-3">
-          <span class="h-8 w-8 rounded-lg bg-[#1c2674] text-white flex items-center justify-center text-sm font-bold">5</span>
-          <span class="text-[11px] font-semibold tracking-widest text-[#1c2674] uppercase">Report</span>
+          <span class="h-8 w-8 rounded-lg b-navy text-white flex items-center justify-center text-sm font-bold">5</span>
+          <span class="text-[11px] font-semibold tracking-widest b-navy-t uppercase">Report</span>
         </div>
         <h3 class="text-base font-bold text-slate-900 mb-1">Back to the team</h3>
         <p class="text-slate-600 text-sm leading-relaxed">Results land in MongoDB and surface in the app as scored evaluations, transcripts, and recommended courses.</p>
@@ -97,7 +98,7 @@
 
     <footer class="flex items-center justify-between pt-4 mt-5 border-t border-slate-100">
       <div class="flex items-center gap-2">
-        <div class="h-5 w-5 rounded bg-[#1c2674] flex items-center justify-center"><span class="text-white font-bold text-[10px]">S</span></div>
+        <div class="h-5 w-5 rounded b-navy flex items-center justify-center"><span class="text-white font-bold text-[10px]">S</span></div>
         <span class="text-[10px] font-semibold tracking-[0.2em] text-slate-400 uppercase">Siloam · Service Quality Evaluation</span>
       </div>
       <span class="text-[10px] font-semibold tracking-[0.2em] text-slate-400">03 / 09</span>

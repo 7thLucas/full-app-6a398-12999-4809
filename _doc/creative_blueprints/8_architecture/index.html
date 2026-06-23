@@ -9,13 +9,14 @@
   .mode-portrait .sl-arch-trust { grid-template-columns: 1fr; }
   .mode-landscape .sl-arch-svc { grid-template-columns: repeat(3, 1fr); }
   .mode-landscape .sl-arch-trust { grid-template-columns: repeat(3, 1fr); }
+.b-navy{background-color:#1c2674}.b-navy-t{color:#1c2674}.b-navy-b{border-color:#1c2674}.b-deep{background-color:#141a4d}.b-gold{background-color:#ffcf00}.b-gold-t{color:#ffcf00}.b-gold2-t{color:#ffdb4d}.b-soft{background-color:#eef2fb}.b-light-t{color:#dbe4f7}.b-mute-t{color:#c3d0ee}.b-green{background-color:#48a942}.b-light-b{border-color:#c3d0ee}.b-grad-cover{background:linear-gradient(to top right,rgba(13,18,53,.82),rgba(15,23,42,.15) 42%,transparent)}
 </style>
 <section class="slide-root w-full h-full overflow-auto bg-white">
   <div class="flex flex-col w-full h-full p-12">
     <div class="mb-7" data-rise style="animation-delay:.05s">
       <div class="flex items-center gap-2.5 mb-3">
-        <span class="h-1.5 w-7 rounded-full bg-[#1c2674]"></span>
-        <p class="text-[12px] font-semibold tracking-[0.2em] text-[#1c2674] uppercase">Under the hood</p>
+        <span class="h-1.5 w-7 rounded-full b-navy"></span>
+        <p class="text-[12px] font-semibold tracking-[0.2em] b-navy-t uppercase">Under the hood</p>
       </div>
       <h2 class="text-3xl font-bold text-slate-900">Three services, independently deployed</h2>
     </div>
@@ -27,10 +28,10 @@
         <p class="text-sm text-slate-600 leading-relaxed mb-3">Upload UI, dashboards, and reports.</p>
         <p class="text-xs text-slate-500 mt-auto">React Router 7 · TypeScript · Tailwind v4 · Vite</p>
       </div>
-      <div class="rounded-2xl bg-[#1c2674] p-6 flex flex-col shadow-sm" data-rise style="animation-delay:.2s">
+      <div class="rounded-2xl b-navy p-6 flex flex-col shadow-sm" data-rise style="animation-delay:.2s">
         <h3 class="text-lg font-bold text-white mb-1">Backend</h3>
-        <p class="text-sm text-[#dbe4f7] leading-relaxed mb-3">Auth, media storage, job orchestration, data API.</p>
-        <p class="text-xs text-[#c3d0ee] mt-auto">Python · FastAPI · MongoDB · AWS S3 · RabbitMQ</p>
+        <p class="text-sm b-light-t leading-relaxed mb-3">Auth, media storage, job orchestration, data API.</p>
+        <p class="text-xs b-mute-t mt-auto">Python · FastAPI · MongoDB · AWS S3 · RabbitMQ</p>
       </div>
       <div class="rounded-2xl border border-slate-200 p-6 flex flex-col shadow-sm" data-rise style="animation-delay:.28s">
         <h3 class="text-lg font-bold text-slate-900 mb-1">AI service</h3>
@@ -41,14 +42,14 @@
 
     <!-- Coupling note -->
     <div class="rounded-xl bg-slate-100 px-5 py-3 mb-5 flex items-center gap-3" data-rise style="animation-delay:.34s">
-      <span class="text-[11px] font-semibold tracking-widest text-[#1c2674] uppercase shrink-0">Coupling</span>
+      <span class="text-[11px] font-semibold tracking-widest b-navy-t uppercase shrink-0">Coupling</span>
       <p class="text-sm text-slate-600">Backend and AI talk only over RabbitMQ — backend publishes analysis jobs, AI consumes and replies. Neither blocks the other.</p>
     </div>
 
     <!-- Trust + delivery -->
     <div class="sl-arch-trust grid gap-5 flex-1">
       <div class="rounded-2xl border border-slate-200 p-6 shadow-sm" data-rise style="animation-delay:.4s">
-        <p class="text-xs font-semibold tracking-widest text-[#1c2674] uppercase mb-3">Security</p>
+        <p class="text-xs font-semibold tracking-widest b-navy-t uppercase mb-3">Security</p>
         <ul class="text-sm text-slate-600 space-y-2 leading-relaxed">
           <li>JWT auth (RS256)</li>
           <li>Fernet field-level encryption</li>
@@ -56,7 +57,7 @@
         </ul>
       </div>
       <div class="rounded-2xl border border-slate-200 p-6 shadow-sm" data-rise style="animation-delay:.46s">
-        <p class="text-xs font-semibold tracking-widest text-[#1c2674] uppercase mb-3">Delivery</p>
+        <p class="text-xs font-semibold tracking-widest b-navy-t uppercase mb-3">Delivery</p>
         <ul class="text-sm text-slate-600 space-y-2 leading-relaxed">
           <li>Jenkins CI/CD per service</li>
           <li>SonarQube quality scanning</li>
@@ -64,7 +65,7 @@
         </ul>
       </div>
       <div class="rounded-2xl border border-slate-200 p-6 shadow-sm" data-rise style="animation-delay:.52s">
-        <p class="text-xs font-semibold tracking-widest text-[#1c2674] uppercase mb-3">Environments</p>
+        <p class="text-xs font-semibold tracking-widest b-navy-t uppercase mb-3">Environments</p>
         <ul class="text-sm text-slate-600 space-y-2 leading-relaxed">
           <li><span class="font-semibold text-slate-800">dev</span> — development branch</li>
           <li><span class="font-semibold text-slate-800">staging</span> — pre-production</li>
@@ -75,7 +76,7 @@
 
     <footer class="flex items-center justify-between pt-4 mt-6 border-t border-slate-100">
       <div class="flex items-center gap-2">
-        <div class="h-5 w-5 rounded bg-[#1c2674] flex items-center justify-center"><span class="text-white font-bold text-[10px]">S</span></div>
+        <div class="h-5 w-5 rounded b-navy flex items-center justify-center"><span class="text-white font-bold text-[10px]">S</span></div>
         <span class="text-[10px] font-semibold tracking-[0.2em] text-slate-400 uppercase">Siloam · Service Quality Evaluation</span>
       </div>
       <span class="text-[10px] font-semibold tracking-[0.2em] text-slate-400">08 / 09</span>

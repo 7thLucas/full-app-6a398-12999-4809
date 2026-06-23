@@ -13,13 +13,14 @@
   .mode-landscape .sl-cover { flex-direction: row; }
   .mode-landscape .sl-cover-visual { width: 42%; height: 100%; }
   .mode-landscape .sl-cover-copy { width: 58%; }
+.b-navy{background-color:#1c2674}.b-navy-t{color:#1c2674}.b-navy-b{border-color:#1c2674}.b-deep{background-color:#141a4d}.b-gold{background-color:#ffcf00}.b-gold-t{color:#ffcf00}.b-gold2-t{color:#ffdb4d}.b-soft{background-color:#eef2fb}.b-light-t{color:#dbe4f7}.b-mute-t{color:#c3d0ee}.b-green{background-color:#48a942}.b-light-b{border-color:#c3d0ee}.b-grad-cover{background:linear-gradient(to top right,rgba(13,18,53,.82),rgba(15,23,42,.15) 42%,transparent)}
 </style>
 <section class="slide-root w-full h-full overflow-auto bg-white">
   <div class="sl-cover flex w-full h-full">
     <!-- Copy column -->
     <div class="sl-cover-copy flex flex-col justify-between p-12">
       <div class="flex items-center gap-3" data-rise style="animation-delay:.05s">
-        <div class="h-9 w-9 rounded-lg bg-[#1c2674] flex items-center justify-center shadow-sm">
+        <div class="h-9 w-9 rounded-lg b-navy flex items-center justify-center shadow-sm">
           <span class="text-white font-bold text-lg">S</span>
         </div>
         <span class="text-sm font-semibold tracking-[0.2em] text-slate-500 uppercase">Siloam Hospitals</span>
@@ -27,12 +28,12 @@
 
       <div class="max-w-2xl">
         <div class="flex items-center gap-2.5 mb-5" data-rise style="animation-delay:.12s">
-          <span class="h-1.5 w-7 rounded-full bg-[#ffcf00]"></span>
-          <p class="text-[12px] font-semibold tracking-[0.2em] text-[#1c2674] uppercase">Service Quality Evaluation System</p>
+          <span class="h-1.5 w-7 rounded-full b-gold"></span>
+          <p class="text-[12px] font-semibold tracking-[0.2em] b-navy-t uppercase">Service Quality Evaluation System</p>
         </div>
-        <h1 class="text-[clamp(2.4rem,4.4vw,3.4rem)] font-bold leading-[1.05] text-slate-900" data-rise style="animation-delay:.2s">
+        <h1 class="text-5xl font-bold leading-[1.05] text-slate-900" data-rise style="animation-delay:.2s">
           Every patient call,<br/>
-          <span class="text-[#1c2674]">scored, understood,</span><br/>
+          <span class="b-navy-t">scored, understood,</span><br/>
           and acted on.
         </h1>
         <p class="mt-6 text-lg text-slate-600 leading-relaxed max-w-xl" data-rise style="animation-delay:.3s">
@@ -49,16 +50,16 @@
     </div>
 
     <!-- Visual column -->
-    <div class="sl-cover-visual relative overflow-hidden bg-[#141a4d]" data-fade>
+    <div class="sl-cover-visual relative overflow-hidden b-deep" data-fade>
       <img
         src="https://api.qb-deck.quantumbyte.ai/common/image-generation?prompt=calm%20modern%20healthcare%20service%20quality%20concept%2C%20soft%20navy%20blue%20light%2C%20abstract%20audio%20waveform%20flowing%20into%20a%20clean%20analytics%20dashboard%2C%20premium%20editorial%2C%20minimal"
         alt="Service quality analysis"
         class="absolute inset-0 w-full h-full object-cover opacity-90"
       />
-      <div class="absolute inset-0 bg-gradient-to-tr from-[#0d1235]/70 via-slate-900/15 to-transparent"></div>
+      <div class="absolute inset-0 b-grad-cover"></div>
       <div class="absolute inset-x-0 bottom-0 p-8">
-        <div class="flex items-center gap-2 text-[#dbe4f7]">
-          <span class="h-1.5 w-1.5 rounded-full bg-[#ffcf00]"></span>
+        <div class="flex items-center gap-2 b-light-t">
+          <span class="h-1.5 w-1.5 rounded-full b-gold"></span>
           <span class="text-[11px] font-semibold tracking-[0.2em] uppercase">Upload · Analyze · Score · Coach</span>
         </div>
       </div>

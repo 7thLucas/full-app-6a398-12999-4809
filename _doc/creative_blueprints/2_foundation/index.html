@@ -13,14 +13,15 @@
   .mode-landscape .sl-found { flex-direction: row; }
   .mode-landscape .sl-found-visual { width: 38%; height: 100%; }
   .mode-landscape .sl-found-copy { width: 62%; }
+.b-navy{background-color:#1c2674}.b-navy-t{color:#1c2674}.b-navy-b{border-color:#1c2674}.b-deep{background-color:#141a4d}.b-gold{background-color:#ffcf00}.b-gold-t{color:#ffcf00}.b-gold2-t{color:#ffdb4d}.b-soft{background-color:#eef2fb}.b-light-t{color:#dbe4f7}.b-mute-t{color:#c3d0ee}.b-green{background-color:#48a942}.b-light-b{border-color:#c3d0ee}.b-grad-cover{background:linear-gradient(to top right,rgba(13,18,53,.82),rgba(15,23,42,.15) 42%,transparent)}
 </style>
 <section class="slide-root w-full h-full overflow-auto bg-white">
   <div class="sl-found flex w-full h-full">
     <!-- Copy -->
     <div class="sl-found-copy flex flex-col justify-center p-12">
       <div class="flex items-center gap-2.5 mb-7" data-rise style="animation-delay:.05s">
-        <span class="h-1.5 w-7 rounded-full bg-[#1c2674]"></span>
-        <p class="text-[12px] font-semibold tracking-[0.2em] text-[#1c2674] uppercase">Why Siloam exists</p>
+        <span class="h-1.5 w-7 rounded-full b-navy"></span>
+        <p class="text-[12px] font-semibold tracking-[0.2em] b-navy-t uppercase">Why Siloam exists</p>
       </div>
 
       <div class="grid grid-cols-1 gap-6">
@@ -41,14 +42,14 @@
         </div>
 
         <!-- Solution -->
-        <div class="rounded-2xl bg-[#1c2674] p-7 shadow-sm" data-rise style="animation-delay:.24s">
+        <div class="rounded-2xl b-navy p-7 shadow-sm" data-rise style="animation-delay:.24s">
           <div class="flex items-center gap-3 mb-3">
             <span class="h-9 w-9 rounded-xl bg-white/15 text-white flex items-center justify-center">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="h-[18px] w-[18px]"><path d="M20 6 9 17l-5-5"/></svg>
             </span>
             <h2 class="text-xl font-bold text-white">The Solution</h2>
           </div>
-          <p class="text-[#dbe4f7] leading-relaxed">
+          <p class="b-light-t leading-relaxed">
             Siloam automates the whole loop:
             <span class="font-semibold text-white">ingest a recording → transcribe &amp;
             evaluate with AI → produce evidence-backed scores → recommend training →
@@ -60,7 +61,7 @@
     </div>
 
     <!-- Visual -->
-    <div class="sl-found-visual relative overflow-hidden bg-[#141a4d]" data-fade>
+    <div class="sl-found-visual relative overflow-hidden b-deep" data-fade>
       <img
         src="https://api.qb-deck.quantumbyte.ai/common/image-generation?prompt=healthcare%20call%20center%20quality%20review%2C%20audio%20waveform%20and%20transcript%20on%20screen%2C%20clinical%20calm%20navy%20blue%20tones%2C%20professional"
         alt="Manual call review today"

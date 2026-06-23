@@ -5,14 +5,15 @@
   @keyframes sl-rise{from{transform:translateY(14px)}to{transform:none}}
   .slide-root [data-rise]{animation:sl-rise .6s cubic-bezier(.16,1,.3,1) both}
   @media (prefers-reduced-motion:reduce){.slide-root [data-rise]{animation:none}}
+.b-navy{background-color:#1c2674}.b-navy-t{color:#1c2674}.b-navy-b{border-color:#1c2674}.b-deep{background-color:#141a4d}.b-gold{background-color:#ffcf00}.b-gold-t{color:#ffcf00}.b-gold2-t{color:#ffdb4d}.b-soft{background-color:#eef2fb}.b-light-t{color:#dbe4f7}.b-mute-t{color:#c3d0ee}.b-green{background-color:#48a942}.b-light-b{border-color:#c3d0ee}.b-grad-cover{background:linear-gradient(to top right,rgba(13,18,53,.82),rgba(15,23,42,.15) 42%,transparent)}
 </style>
 <section class="slide-root w-full h-full overflow-auto bg-white">
   <div class="flex flex-col w-full h-full p-12">
     <div class="flex items-end justify-between mb-7" data-rise style="animation-delay:.05s">
       <div>
         <div class="flex items-center gap-2.5 mb-3">
-          <span class="h-1.5 w-7 rounded-full bg-[#1c2674]"></span>
-          <p class="text-[12px] font-semibold tracking-[0.2em] text-[#1c2674] uppercase">What the product does</p>
+          <span class="h-1.5 w-7 rounded-full b-navy"></span>
+          <p class="text-[12px] font-semibold tracking-[0.2em] b-navy-t uppercase">What the product does</p>
         </div>
         <h2 class="text-3xl font-bold text-slate-900">Core features, by who uses them</h2>
       </div>
@@ -20,7 +21,7 @@
 
     <!-- Persona chips -->
     <div class="flex flex-wrap gap-3 mb-8" data-rise style="animation-delay:.12s">
-      <span class="px-4 py-2 rounded-full bg-[#1c2674] text-white text-sm font-semibold shadow-sm">Service Agent</span>
+      <span class="px-4 py-2 rounded-full b-navy text-white text-sm font-semibold shadow-sm">Service Agent</span>
       <span class="px-4 py-2 rounded-full bg-slate-100 text-slate-500 text-sm font-medium">Quality / Training Team</span>
       <span class="px-4 py-2 rounded-full bg-slate-100 text-slate-500 text-sm font-medium">Manager</span>
     </div>
@@ -28,7 +29,7 @@
     <!-- Feature grid for active persona: Service Agent -->
     <div class="grid grid-cols-2 gap-5 flex-1">
       <div class="rounded-2xl border border-slate-200 p-6 flex flex-col shadow-sm" data-rise style="animation-delay:.2s">
-        <div class="h-11 w-11 rounded-xl bg-[#eef2fb] text-[#1c2674] flex items-center justify-center mb-3">
+        <div class="h-11 w-11 rounded-xl b-soft b-navy-t flex items-center justify-center mb-3">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></svg>
         </div>
         <h3 class="text-lg font-bold text-slate-900 mb-1">Upload a recording</h3>
@@ -36,7 +37,7 @@
       </div>
 
       <div class="rounded-2xl border border-slate-200 p-6 flex flex-col shadow-sm" data-rise style="animation-delay:.28s">
-        <div class="h-11 w-11 rounded-xl bg-[#eef2fb] text-[#1c2674] flex items-center justify-center mb-3">
+        <div class="h-11 w-11 rounded-xl b-soft b-navy-t flex items-center justify-center mb-3">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg>
         </div>
         <h3 class="text-lg font-bold text-slate-900 mb-1">Scored evaluation</h3>
@@ -44,7 +45,7 @@
       </div>
 
       <div class="rounded-2xl border border-slate-200 p-6 flex flex-col shadow-sm" data-rise style="animation-delay:.36s">
-        <div class="h-11 w-11 rounded-xl bg-[#eef2fb] text-[#1c2674] flex items-center justify-center mb-3">
+        <div class="h-11 w-11 rounded-xl b-soft b-navy-t flex items-center justify-center mb-3">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
         </div>
         <h3 class="text-lg font-bold text-slate-900 mb-1">Evidence in the transcript</h3>
@@ -52,7 +53,7 @@
       </div>
 
       <div class="rounded-2xl border border-slate-200 p-6 flex flex-col shadow-sm" data-rise style="animation-delay:.44s">
-        <div class="h-11 w-11 rounded-xl bg-[#eef2fb] text-[#1c2674] flex items-center justify-center mb-3">
+        <div class="h-11 w-11 rounded-xl b-soft b-navy-t flex items-center justify-center mb-3">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
         </div>
         <h3 class="text-lg font-bold text-slate-900 mb-1">Top-3 course recommendations</h3>
@@ -68,7 +69,7 @@
 
     <footer class="flex items-center justify-between pt-4 mt-5 border-t border-slate-100">
       <div class="flex items-center gap-2">
-        <div class="h-5 w-5 rounded bg-[#1c2674] flex items-center justify-center"><span class="text-white font-bold text-[10px]">S</span></div>
+        <div class="h-5 w-5 rounded b-navy flex items-center justify-center"><span class="text-white font-bold text-[10px]">S</span></div>
         <span class="text-[10px] font-semibold tracking-[0.2em] text-slate-400 uppercase">Siloam · Service Quality Evaluation</span>
       </div>
       <span class="text-[10px] font-semibold tracking-[0.2em] text-slate-400">05 / 09</span>
